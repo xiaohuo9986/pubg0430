@@ -1,6 +1,6 @@
 const appData = {
   autoRefresh: true,
-  refreshInterval: 1000,
+  refreshInterval: Math.floor(1000 / 60),
   gsTime: 0,
   me: [-1, -1, 0, 0],
   meGuid: -1,
@@ -26,7 +26,7 @@ vapp = new Vue({
     mapType: 'erangel',
     followMe: true,
     isDesert: false,
-    showBox: true,
+    showBox: false,
     showAirDrop: true,
     showCar: true,
 
@@ -52,8 +52,8 @@ vapp = new Vue({
     showDrink: true,
     showGrenade: true,
     showSmokeBomb: false,
-    showAmmo556: true,
-    showAmmo762: true,
+    showAmmo556: false,
+    showAmmo762: false,
     showForeGrip: false,
     showLowST: false,
     showHighST: true,
@@ -63,15 +63,15 @@ vapp = new Vue({
     showARStock: false,
     showSRFlashHider: false,
     showSRSuppressor: true,
-    showSRExtended: true,
-    showSRStock: true,
-    showM16A4: true,
+    showSRExtended: false,
+    showSRStock: false,
+    showM16A4: false,
     showSCAR: true,
-    showAK47: true,
+    showAK47: false,
     showHK416: true,
     showPan: true,
-    showMini14: true,
-    showSKS: true,
+    showMini14: false,
+    showSKS: false,
     showKar98k: true,
 
     // --------------------------------------------------------------------------
@@ -91,7 +91,6 @@ vapp = new Vue({
     showItemFlags: function () {
       if (this.showItemAll) {
         return 0b11111111111111111111111111111111
-		//return 0b10000000000000000000000000000000
       }
       let flags = 0
       // if (this.showItemTop) {
@@ -448,7 +447,7 @@ for (let i = 0; i <= 7; i++) {
     gridSource.addFeature(lineMinorY)
   }
 }
-// 毒圈
+// blue and white circle
 const zoneStyleFunc = function (feature) {
   const style = new ol.style.Style({
     fill : new ol.style.Fill({
@@ -678,24 +677,21 @@ const renderMap = () => {
         )
       )
     } else { // enemy
-      if (playerObj.team) {
+      //if (playerObj.team) {
         //label = `${playerObj.team}`
-      } else if (playerObj.name) {
-        label = playerObj.name
-      } else {
-       // label = `<${playerObj.name}>`
-      }
-      if (playerObj.kills) {
-       // label += ` |杀:${playerObj.kills}`
-      }
+      //} else if (playerObj.name) {
+        //label = playerObj.name
+      //} else {
+        //label = `<${playerObj.name}>`
+      //}
+      //if (playerObj.kills) {
+        //label += ` |杀:${playerObj.kills}|`
+      //}
     }
-    if (playerObj.health != null) {
-     // label += ` |血:${Math.floor(playerObj.health)}|`
-    }
-	if (playerObj.distance != null) {
-		//label += ` 距离:{playerObj.distance}|`
-	}
-    feature.set('_label', label)
+    //if (playerObj.health != null) {
+      //label += ` |血:${Math.floor(playerObj.health)}|`
+    //}
+    feature.set('_label', '')
     // re-add should be fine
     playerSource.addFeature(feature)
   }
